@@ -1,11 +1,15 @@
 package se.sml.sdj.model;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -13,6 +17,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import se.sml.sdj.service.exception.ServiceException;
 
 @Entity
+@Table(name = "Users")
 public class User {
 	@Id
 	@GeneratedValue
@@ -29,28 +34,32 @@ public class User {
 
 	@Column(unique = true, nullable = false)
 	private String userNumber;
+	
+	@Column(nullable = false)
+	private String password;
 
 	@Column(nullable = false)
 	private String status;
 	
-	@ManyToOne // (cascade = CascadeType.PERSIST)
-	private Team team;
+//	@ManyToOne // (cascade = CascadeType.PERSIST)
+////	@JoinColumn(name="id")
+//	private Team team;
 
-	@OneToOne
-	private WorkItem workItem;
+	@OneToMany(fetch = FetchType.EAGER)
+	private Collection<WorkItem> workItems;
 
 
 	protected User() {
 	}
 
-	public User(String username, String firstName, String lastName, String userNumber, Team team, WorkItem workItem, String status) throws ServiceException {
+	public User(String username, String firstName, String lastName, String userNumber, String password, String status) throws ServiceException {
 		this.username = username;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.userNumber = userNumber;
-		this.team = team;
-		this.workItem = workItem;
+		this.password = password;
 		this.status = status;
+		this.workItems = new ArrayList<>();
 	}
 
 	public Long getId() {
@@ -69,16 +78,20 @@ public class User {
 		return lastName;
 	}
 
-	public String getEmployeeNumber() {
+	public String getUserNumber() {
 		return userNumber;
 	}
 
-	public Team getTeam() {
-		return team;
+	public String getPassword() {
+		return password;
 	}
+	
+//	public Team getTeam() {
+//		return team;
+//	}
 
-	public WorkItem getParkingSpot() {
-		return workItem;
+	public Collection<WorkItem> getWorkItem() {
+		return workItems;
 	}
 	
 	public String getStatus() {
@@ -100,13 +113,17 @@ public class User {
 	public void setUserNumber(String userNumber) {
 		this.userNumber = userNumber;
 	}
-
-	public void setTeam(Team team) {
-		this.team = team;
+	
+	public void setPassword(String password) {
+		this.password = password;
 	}
+	
+//	public void setTeam(Team team) {
+//		this.team = team;
+//	}
 
-	public void setParkingSpot(WorkItem workItem) {
-		this.workItem = workItem;
+	public void addWorkItem(WorkItem workItem) {
+		workItems.add(workItem);
 	}
 	
 	public void setStatus(String status)
