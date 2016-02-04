@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import se.sml.sdj.model.User;
+import se.sml.sdj.model.WorkItem;
 
 public interface UserRepository extends PagingAndSortingRepository<User, Long> {
 
@@ -18,7 +19,7 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long> {
 
 	List<User> findByLastName(String lastName);
 
-	List<User> findByUsername(String username);
+	User findByUsername(String username);
 	
 	List<User> findByFirstNameAndLastName(String firstName, String lastName);
 	
@@ -39,4 +40,34 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long> {
 //	@Query("select e from User e where e.employeeNumber = ?1")
 	@Query("select e from #{#entityName} e where e.userNumber = ?1")
 	List<User> getByNumber(String number);
+	
+	@Query("select u.workItems from User u where u.username = ?1")
+	List<WorkItem> findWorkItemsByUser(String name);
+	
+	
+//	@Query("select e from #{#entityName} e where e.Team_id = ?1")
+//	List<User> findAll(Long number);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

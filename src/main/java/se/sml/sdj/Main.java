@@ -63,6 +63,7 @@ public final class Main {
 			user1.addWorkItem(workItem3);
 			user1.addWorkItem(workItem4);
 			user1.addWorkItem(workItem5);
+			user2.addWorkItem(workItem6);
 			
 			//Update Status for user
 			user1.setStatus("Inactive");
@@ -82,16 +83,50 @@ public final class Main {
 //			userRepository.findByLastNameContaining("Bern").forEach(System.out::println);
 			System.out.println(userRepository.countByLastName("Bernadotte"));
 			
-			System.out.println("\nTeam:");
-			teamRepository.findByName("Hovet").forEach(System.out::println);
+			System.out.println("\nTeam:\n" + teamRepository.findByName("Hovet"));
+
+			System.out.println("\nAll Teams:");
+			teamRepository.findAll().forEach(System.out::println);			
 			
 			System.out.println("\nUserNumber:");
 			userRepository.findByUserNumber("1").forEach(System.out::println);
 			
 			System.out.println("\nShit loads of different names:");
 			userRepository.findByFirstNameAndLastNameAndUsername("Carl Gustav", "Bernadotte", "CG16-12345").forEach(System.out::println);
-		
 			
+			System.out.println("\nAll Users from a Team:");
+			teamRepository.findUsersByTeam("Hovet").forEach(System.out::println);
+
+			
+			
+// WorkItem queries:
+			
+			System.out.println("\nAll WorkItem for specified Status:");
+			workItemRepository.findByStatus("Unstarted").forEach(System.out::println);;
+			
+			
+			
+			System.out.println("\nAll WorkItem for specified Team:");
+			teamRepository.findUsersByTeam("Hovet").forEach(u -> u.getWorkItem().forEach(System.out::println)); 
+//			teamRepository.findByName("Hovet").getUsers().forEach(u -> u.getWorkItem().forEach(System.out::println)); 
+			
+			
+			System.out.println("\nAll WorkItem for specified Team: version 2");
+			teamRepository.findWorkItemsByTeam("Hovet").forEach(System.out::println); 
+			
+			
+			
+			
+			System.out.println("\nAll WorkItems from a User:");
+			userRepository.findWorkItemsByUser("CG16-12345").forEach(System.out::println);
+			
+			
+			
+			System.out.println("\nAll WorkItem containing specified text-string:");
+			workItemRepository.findByDescriptionContaining("ugly").forEach(System.out::println);;
+			
+			
+//			userRepository.getAll("11").forEach(System.out::println);
 			
 			
 //			System.out.println("\n ParkingSpot:");
