@@ -26,11 +26,10 @@ public class UserService {
 	public User save(User user) throws ServiceException {
 		{
 			{
-				if (maximumWorkItems(user) && correctPassword(user) && user.getStatus() == "Active" || user.getStatus() == "Inactive") {
+				if (maximumWorkItems(user) && correctUsername(user) && user.getStatus() == "Active" || user.getStatus() == "Inactive") {
 					
 					if (user.getStatus() == "Inactive") {
 						user.getWorkItem().forEach(w -> w.setStatus("Unstarted"));
-						user.getWorkItem().forEach(w -> workItemRepository.save(w));
 						workItemRepository.save(user.getWorkItem());
 					}
 					return userRepository.save(user);
@@ -42,13 +41,13 @@ public class UserService {
 		}
 	}
 
-	private boolean correctPassword(User user) throws ServiceException {
+	private boolean correctUsername(User user) throws ServiceException {
 		{
-			if (user.getPassword().length() >= 10) {
+			if (user.getUsername().length() >= 10) {
 				return true;
 			}
 			else {
-				throw new ServiceException("Password must be at least 10 char long");
+				throw new ServiceException("Username must be at least 10 char long");
 			}
 		}
 	}
@@ -64,3 +63,18 @@ public class UserService {
 		}
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

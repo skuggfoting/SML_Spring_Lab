@@ -64,27 +64,23 @@ public class WorkItem {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
 	}
 
-	// @Override
-	// public boolean equals(Object otherObj)
-	// {
-	// if (this == otherObj)
-	// {
-	// return true;
-	// }
-	//
-	// if (otherObj instanceof User)
-	// {
-	// User otherUser = (User) otherObj;
-	// return this.username.equals(otherUser.username);
-	// }
-	// return false;
-	// }
-	//
-	// @Override
-	// public int hashCode()
-	// {
-	// int result = 1;
-	// result += 37 * username.hashCode();
-	// return result;
-	// }
+	@Override
+	public boolean equals(Object otherObj) {
+		if (this == otherObj) {
+			return true;
+		}
+
+		if (otherObj instanceof WorkItem) {
+			WorkItem otherWorkItem = (WorkItem) otherObj;
+			return this.workItemNumber.equals(otherWorkItem.workItemNumber);
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = 1;
+		result += 37 * workItemNumber.hashCode();
+		return result;
+	}
 }

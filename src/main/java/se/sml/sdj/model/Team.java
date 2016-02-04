@@ -3,13 +3,11 @@ package se.sml.sdj.model;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -60,4 +58,23 @@ public class Team {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
 	}
 
+	@Override
+	public boolean equals(Object otherObj) {
+		if (this == otherObj) {
+			return true;
+		}
+
+		if (otherObj instanceof Team) {
+			Team otherTeam = (Team) otherObj;
+			return this.name.equals(otherTeam.name);
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = 1;
+		result += 37 * name.hashCode();
+		return result;
+	}
 }

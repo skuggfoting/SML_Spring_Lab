@@ -34,30 +34,25 @@ public class User {
 
 	@Column(unique = true, nullable = false)
 	private String userNumber;
-	
-	@Column(nullable = false)
-	private String password;
 
 	@Column(nullable = false)
 	private String status;
-	
-//	@ManyToOne // (cascade = CascadeType.PERSIST)
-////	@JoinColumn(name="id")
-//	private Team team;
+
+	// @ManyToOne // (cascade = CascadeType.PERSIST)
+	//// @JoinColumn(name="id")
+	// private Team team;
 
 	@OneToMany(fetch = FetchType.EAGER)
 	private Collection<WorkItem> workItems;
 
-
 	protected User() {
 	}
 
-	public User(String username, String firstName, String lastName, String userNumber, String password, String status) throws ServiceException {
+	public User(String username, String firstName, String lastName, String userNumber, String status) throws ServiceException {
 		this.username = username;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.userNumber = userNumber;
-		this.password = password;
 		this.status = status;
 		this.workItems = new ArrayList<>();
 	}
@@ -82,18 +77,14 @@ public class User {
 		return userNumber;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-	
-//	public Team getTeam() {
-//		return team;
-//	}
+	// public Team getTeam() {
+	// return team;
+	// }
 
 	public Collection<WorkItem> getWorkItem() {
 		return workItems;
 	}
-	
+
 	public String getStatus() {
 		return status;
 	}
@@ -113,21 +104,16 @@ public class User {
 	public void setUserNumber(String userNumber) {
 		this.userNumber = userNumber;
 	}
-	
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	
-//	public void setTeam(Team team) {
-//		this.team = team;
-//	}
+
+	// public void setTeam(Team team) {
+	// this.team = team;
+	// }
 
 	public void addWorkItem(WorkItem workItem) {
 		workItems.add(workItem);
 	}
-	
-	public void setStatus(String status)
-	{
+
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
@@ -135,23 +121,20 @@ public class User {
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
 	}
-	
-//	@Override
-//	public String toString()
-//	{
-//		return userId + " : " + username + " : " + password + " : " + status;
-//	}
+
+	// @Override
+	// public String toString()
+	// {
+	// return userId + " : " + username + " : " + password + " : " + status;
+	// }
 
 	@Override
-	public boolean equals(Object otherObj)
-	{
-		if (this == otherObj)
-		{
+	public boolean equals(Object otherObj) {
+		if (this == otherObj) {
 			return true;
 		}
 
-		if (otherObj instanceof User)
-		{
+		if (otherObj instanceof User) {
 			User otherUser = (User) otherObj;
 			return this.username.equals(otherUser.username);
 		}
@@ -159,8 +142,7 @@ public class User {
 	}
 
 	@Override
-	public int hashCode()
-	{
+	public int hashCode() {
 		int result = 1;
 		result += 37 * username.hashCode();
 		return result;

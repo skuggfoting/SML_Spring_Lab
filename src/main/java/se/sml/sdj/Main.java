@@ -45,15 +45,18 @@ public final class Main {
 
 //			employeeRepository.findAll().forEach(System.out::println);
 
-			User user1 = new User("CG16", "Carl Gustav", "Bernadotte", "1", "1234567890", "Active");
-			User user2 = new User("SiBe", "Silvia", "Bernadotte", "2", "1234567890", "Inactive");
-			User user3 = new User("ViCotte", "Victoria", "Bernadotte", "3", "1234567890", "Active");
-			User user4 = new User("Beth the Death", "Elisabeth", "Tarras-Wahlberg", "4", "1234567890", "Active");
+			User user1 = new User("CG16-12345", "Carl Gustav", "Bernadotte", "1", "Active");
+			User user2 = new User("SiBe-12345", "Silvia", "Bernadotte", "2", "Inactive");
+			User user3 = new User("ViCotte-12", "Victoria", "Bernadotte", "3", "Active");
+			User user4 = new User("Beth the Death", "Elisabeth", "Tarras-Wahlberg", "4", "Active");
 
 			team1.addUser(user1);
 			team1.addUser(user2);
 			team1.addUser(user3);
 			team2.addUser(user4);
+//			team2.addUser(user1);
+			
+//			workItem1.addUser(user1);
 			
 			user1.addWorkItem(workItem1);
 			user1.addWorkItem(workItem2);
@@ -73,15 +76,23 @@ public final class Main {
 			teamService.save(team1);
 			teamService.save(team2);
 			
-			
-			
-			System.out.println("\n User:");
+
+			System.out.println("\nUser:");
 			userRepository.findByFirstNameAndLastName("Silvia", "Bernadotte").forEach(System.out::println);
-			userRepository.findByLastNameContaining("Bern").forEach(System.out::println);
+//			userRepository.findByLastNameContaining("Bern").forEach(System.out::println);
 			System.out.println(userRepository.countByLastName("Bernadotte"));
 			
-			System.out.println("\n Team:");
+			System.out.println("\nTeam:");
 			teamRepository.findByName("Hovet").forEach(System.out::println);
+			
+			System.out.println("\nUserNumber:");
+			userRepository.findByUserNumber("1").forEach(System.out::println);
+			
+			System.out.println("\nShit loads of different names:");
+			userRepository.findByFirstNameAndLastNameAndUsername("Carl Gustav", "Bernadotte", "CG16-12345").forEach(System.out::println);
+		
+			
+			
 			
 //			System.out.println("\n ParkingSpot:");
 //			workItemRepository.findByLable("Slottsgaraget").forEach(System.out::println);;

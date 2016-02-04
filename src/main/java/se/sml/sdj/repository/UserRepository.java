@@ -16,9 +16,15 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long> {
 
 	List<User> findByFirstName(String firstName);
 
-	List<User> findByLastNameContaining(String value);
+	List<User> findByLastName(String lastName);
 
+	List<User> findByUsername(String username);
+	
 	List<User> findByFirstNameAndLastName(String firstName, String lastName);
+	
+	List<User> findByFirstNameAndLastNameAndUsername(String firstName, String lastName, String username);
+
+	List<User> findByUserNumber(String userNumber);
 
 	Long countByLastName(String lastName);
 	

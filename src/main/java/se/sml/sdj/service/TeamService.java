@@ -1,6 +1,7 @@
 package se.sml.sdj.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import se.sml.sdj.model.Team;
@@ -19,14 +20,16 @@ public class TeamService {
 	}
 
 	public Team save(Team team) throws ServiceException {
-		{
-			System.out.println(team.getUsers().size());
-			if (team.getUsers().size() <= 10) {
+		if (team.getUsers().size() <= 10) {
+			try {
 				return repository.save(team);
 			}
-			else {
-				throw new ServiceException("There can be only 10 Users in each Team");
+			catch (DataIntegrityViolationException e) {
+				throw new ServiceException("A User can only be in one Team at a time");
 			}
+		}
+		else {
+			throw new ServiceException("There can be only 10 Users in each Team");
 		}
 	}
 }
