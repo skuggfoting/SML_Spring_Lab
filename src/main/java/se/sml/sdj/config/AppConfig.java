@@ -17,7 +17,7 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
-@EnableJpaRepositories("se.sml.sdj.repository")
+@EnableJpaRepositories("se.sml.sdj.service")
 @EnableTransactionManagement
 public class AppConfig {
 

@@ -1,6 +1,7 @@
 package se.sml.sdj.model;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -27,6 +28,9 @@ public class WorkItem {
 
 	@Column(nullable = false)
 	private String status;
+	
+	@Embedded
+	private Issue issue;
 
 	protected WorkItem() {
 	}
@@ -35,8 +39,7 @@ public class WorkItem {
 		this.lable = lable;
 		this.description = description;
 		this.workItemNumber = workItemNumber;
-
-		setStatus(status);
+		this.status = status;
 	}
 
 	public Long getId() {
@@ -51,12 +54,20 @@ public class WorkItem {
 		return status;
 	}
 	
+	public Issue getIssue() {
+		return issue;
+	}
+	
 	public void setLable(String lable) {
 		this.lable = lable;
 	}
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	
+	public void addIssue(Issue issue) {
+		this.issue = issue;
 	}
 
 	@Override

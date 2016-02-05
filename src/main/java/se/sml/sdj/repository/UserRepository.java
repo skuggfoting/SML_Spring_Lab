@@ -1,5 +1,6 @@
 package se.sml.sdj.repository;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -43,6 +44,7 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long> {
 	
 	@Query("select u.workItems from User u where u.username = ?1")
 	List<WorkItem> findWorkItemsByUser(String name);
+
 	
 	
 //	@Query("select e from #{#entityName} e where e.Team_id = ?1")

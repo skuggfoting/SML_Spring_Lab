@@ -1,4 +1,4 @@
-package se.sml.sdj.repository;
+package se.sml.sdj.service;
 
 import java.util.List;
 
@@ -20,10 +20,10 @@ import se.sml.sdj.model.WorkItem;
 - Söka efter work item som innehåller en viss text i sin beskrivning x
  */
 
-public interface WorkItemRepository extends CrudRepository<WorkItem, Long> {
-	
+interface WorkItemRepository extends CrudRepository<WorkItem, Long> {
+
 	List<WorkItem> findByStatus(String lable);
-	
+
 	List<WorkItem> findByDescriptionContaining(String value);
 
 	Long countByLable(String lable);

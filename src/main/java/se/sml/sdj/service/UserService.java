@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import se.sml.sdj.model.User;
 import se.sml.sdj.repository.UserRepository;
-import se.sml.sdj.repository.WorkItemRepository;
 import se.sml.sdj.service.exception.ServiceException;
 
 @Service
@@ -31,6 +30,8 @@ public class UserService {
 					if (user.getStatus() == "Inactive") {
 						user.getWorkItem().forEach(w -> w.setStatus("Unstarted"));
 						workItemRepository.save(user.getWorkItem());
+						user.getWorkItem().clear();
+//						throw new ServiceException("User is 'Inactive' and all WorkItems associated with the User has been set to 'Unstarted' and dissociated with the User");
 					}
 					return userRepository.save(user);
 				}

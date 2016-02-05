@@ -4,16 +4,17 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 
+import se.sml.sdj.model.Issue;
 import se.sml.sdj.model.Team;
 import se.sml.sdj.model.User;
 import se.sml.sdj.model.WorkItem;
-import se.sml.sdj.repository.TeamRepository;
 import se.sml.sdj.repository.UserRepository;
+//import se.sml.sdj.service.TeamRepository;
 import se.sml.sdj.service.TeamService;
 import se.sml.sdj.service.UserService;
+//import se.sml.sdj.service.WorkItemRepository;
 import se.sml.sdj.service.WorkItemService;
 import se.sml.sdj.service.exception.ServiceException;
-import se.sml.sdj.repository.WorkItemRepository;
 
 public final class Main {
 
@@ -24,12 +25,12 @@ public final class Main {
 			context.refresh();
 			
 			//Måste vara UserService för att save i userSevice ska fungera. Annars används crudens save.
-			UserRepository userRepository = context.getBean(UserRepository.class);
-			TeamRepository teamRepository = context.getBean(TeamRepository.class);
+//			UserRepository userRepository = context.getBean(UserRepository.class);
+//			TeamRepository teamRepository = context.getBean(TeamRepository.class);
+//			WorkItemRepository workItemRepository = context.getBean(WorkItemRepository.class);
 			UserService userService = context.getBean(UserService.class);
 			TeamService teamService = context.getBean(TeamService.class);
 			WorkItemService workItemService = context.getBean(WorkItemService.class);
-			WorkItemRepository workItemRepository = context.getBean(WorkItemRepository.class);
 	
 			Team team1 = new Team("Hovet");
 			Team team2 = new Team("PR");
@@ -46,9 +47,11 @@ public final class Main {
 //			employeeRepository.findAll().forEach(System.out::println);
 
 			User user1 = new User("CG16-12345", "Carl Gustav", "Bernadotte", "1", "Active");
-			User user2 = new User("SiBe-12345", "Silvia", "Bernadotte", "2", "Inactive");
+			User user2 = new User("SiBe-12345", "Silvia", "Bernadotte", "2", "Active");
 			User user3 = new User("ViCotte-12", "Victoria", "Bernadotte", "3", "Active");
 			User user4 = new User("Beth the Death", "Elisabeth", "Tarras-Wahlberg", "4", "Active");
+			
+			Issue issue1 = new Issue("Appen suger, knugen är missnöjd");
 
 			team1.addUser(user1);
 			team1.addUser(user2);
@@ -65,9 +68,15 @@ public final class Main {
 			user1.addWorkItem(workItem5);
 			user2.addWorkItem(workItem6);
 			
+			workItem1.addIssue(issue1);
+			System.out.println(workItem1);
+			issue1.addDescription("Ny issue");
+			workItem1.addIssue(issue1);
+			System.out.println(workItem1);
+			
 			//Update Status for user
-			user1.setStatus("Inactive");
-			userService.save(user1);
+//			user1.setStatus("Inactive");
+//			userService.save(user1);
 			
 			userService.save(user1);
 			userService.save(user2);
@@ -77,81 +86,62 @@ public final class Main {
 			teamService.save(team1);
 			teamService.save(team2);
 			
+			workItemService.save(workItem1);
 
-			System.out.println("\nUser:");
-			userRepository.findByFirstNameAndLastName("Silvia", "Bernadotte").forEach(System.out::println);
-//			userRepository.findByLastNameContaining("Bern").forEach(System.out::println);
-			System.out.println(userRepository.countByLastName("Bernadotte"));
-			
-			System.out.println("\nTeam:\n" + teamRepository.findByName("Hovet"));
+//			System.out.println("\nUser:");
+//			userRepository.findByFirstNameAndLastName("Silvia", "Bernadotte").forEach(System.out::println);
+////			userRepository.findByLastNameContaining("Bern").forEach(System.out::println);
+//			System.out.println(userRepository.countByLastName("Bernadotte"));
+//			
+//			System.out.println("\nTeam:\n" + teamService.findByName("Hovet"));
+//
+//			System.out.println("\nAll Teams:");
+//			teamService.findAll().forEach(System.out::println);			
+//			
+//			System.out.println("\nUserNumber:");
+//			userRepository.findByUserNumber("1").forEach(System.out::println);
+//			
+//			System.out.println("\nShit loads of different names:");
+//			userRepository.findByFirstNameAndLastNameAndUsername("Carl Gustav", "Bernadotte", "CG16-12345").forEach(System.out::println);
+//			
+//			System.out.println("\nAll Users from a Team:");
+//			teamService.findUsersByTeam("Hovet").forEach(System.out::println);
 
-			System.out.println("\nAll Teams:");
-			teamRepository.findAll().forEach(System.out::println);			
 			
-			System.out.println("\nUserNumber:");
-			userRepository.findByUserNumber("1").forEach(System.out::println);
-			
-			System.out.println("\nShit loads of different names:");
-			userRepository.findByFirstNameAndLastNameAndUsername("Carl Gustav", "Bernadotte", "CG16-12345").forEach(System.out::println);
-			
-			System.out.println("\nAll Users from a Team:");
-			teamRepository.findUsersByTeam("Hovet").forEach(System.out::println);
-
 			
 			
 // WorkItem queries:
 			
 			System.out.println("\nAll WorkItem for specified Status:");
-			workItemRepository.findByStatus("Unstarted").forEach(System.out::println);;
+			workItemService.findByStatus("Unstarted").forEach(System.out::println);;
 			
 			
 			
-			System.out.println("\nAll WorkItem for specified Team:");
-			teamRepository.findUsersByTeam("Hovet").forEach(u -> u.getWorkItem().forEach(System.out::println)); 
+			System.out.println("\nAll WorkItems for a specified Team:");
+			workItemService.findWorkItemsByTeam("Hovet").forEach(System.out::println); 
 //			teamRepository.findByName("Hovet").getUsers().forEach(u -> u.getWorkItem().forEach(System.out::println)); 
 			
 			
-			System.out.println("\nAll WorkItem for specified Team: version 2");
-			teamRepository.findWorkItemsByTeam("Hovet").forEach(System.out::println); 
+//			System.out.println("\nAll WorkItem for specified Team: version 2");
+//			teamRepository.findWorkItemsByTeam("Hovet").forEach(System.out::println); 
 			
 			
 			
-			
-			System.out.println("\nAll WorkItems from a User:");
-			userRepository.findWorkItemsByUser("CG16-12345").forEach(System.out::println);
-			
-			
-			
-			System.out.println("\nAll WorkItem containing specified text-string:");
-			workItemRepository.findByDescriptionContaining("ugly").forEach(System.out::println);;
-			
-			
-//			userRepository.getAll("11").forEach(System.out::println);
-			
-			
-//			System.out.println("\n ParkingSpot:");
-//			workItemRepository.findByLable("Slottsgaraget").forEach(System.out::println);;
-			
-//			employeeRepository.save(new Employee("Master", "Yoda", "1001", new Address("street", "postal", "zip")));
-//			System.out.println(employeeRepository.findByAddressStreet("street"));
-			
-//			repository.removeByLastName("Yoda").forEach(System.out::println);
-
-			
-			// Find one employee
-//			System.out.println(employeeRepository.findOne(employee.getId()));
-			
-			// Delete employee
-//			employeeRepository.delete(employee);
 //			
-//			// Find employee again 
-//			System.out.println(employeeRepository.findOne(employee.getId()));
-			
-			Slice<User> result = userRepository.findByLastNameLike("Bernadotte%", new PageRequest(0, 5));
-			System.out.println("\nLastNameLike:");
-			result.forEach(System.out::println);
-			
-			System.out.println("\nUsernr:\n" + userRepository.getByNumber("1"));
+//			System.out.println("\nAll WorkItems from a User:");
+//			userRepository.findWorkItemsByUser("CG16-12345").forEach(System.out::println);
+//			
+//			
+//			
+//			System.out.println("\nAll WorkItem containing specified text-string:");
+//			workItemService.findByDescriptionContaining("ugly").forEach(System.out::println);;
+//			
+//						
+//			Slice<User> result = userRepository.findByLastNameLike("Bernadotte%", new PageRequest(0, 5));
+//			System.out.println("\nLastNameLike:");
+//			result.forEach(System.out::println);
+//			
+//			System.out.println("\nUsernr:\n" + userRepository.getByNumber("1"));
 			
 		}
 	}
