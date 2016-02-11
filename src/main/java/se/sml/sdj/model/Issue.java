@@ -15,22 +15,23 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 @Embeddable
 public class Issue {
+	
 	@Column()
-	private String description;
+	private String note;
 
 	protected Issue() {
 	}
 
-	public Issue(String issue) {
-		this.description = issue;
+	public Issue(String note) {
+		this.note = note;
 	}
 
 	public String getIssue() {
-		return description;
+		return note;
 	}
 
-	public void addDescription(String issue) {
-		this.description = issue;
+	public void setIssue(String note) {
+		this.note = note;
 	}
 
 	@Override

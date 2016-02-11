@@ -7,7 +7,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import se.sml.sdj.model.Team;
-import se.sml.sdj.model.User;
 import se.sml.sdj.service.exception.ServiceException;
 
 @Service
@@ -36,22 +35,14 @@ public class TeamService {
 	}
 
 	public Team findByName(String name) {
-		Team team = repository.findByName(name);
-		return team;
+		return repository.findByName(name);
 	}
 
 	public List<Team> findAll() {
-		List<Team> team = repository.findAll();
-		return team;
+		return repository.findAll();
 	}
 
 	public Long countByName(String name) {
-		Long number = repository.countByName(name);
-		return number;
-	}
-
-	public List<User> findUsersByTeam(String name) {
-		List<User> users = repository.findUsersByTeam(name);
-		return users;
+		return repository.countByName(name);
 	}
 }

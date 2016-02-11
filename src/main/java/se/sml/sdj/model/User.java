@@ -77,10 +77,6 @@ public class User {
 		return userNumber;
 	}
 
-	// public Team getTeam() {
-	// return team;
-	// }
-
 	public Collection<WorkItem> getWorkItem() {
 		return workItems;
 	}
@@ -105,10 +101,6 @@ public class User {
 		this.userNumber = userNumber;
 	}
 
-	// public void setTeam(Team team) {
-	// this.team = team;
-	// }
-
 	public void addWorkItem(WorkItem workItem) {
 		workItems.add(workItem);
 	}
@@ -121,12 +113,6 @@ public class User {
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
 	}
-
-	// @Override
-	// public String toString()
-	// {
-	// return userId + " : " + username + " : " + password + " : " + status;
-	// }
 
 	@Override
 	public boolean equals(Object otherObj) {
