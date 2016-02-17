@@ -3,7 +3,6 @@ package se.sml.sdj.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import se.sml.sdj.model.Team;
@@ -11,7 +10,7 @@ import se.sml.sdj.service.exception.ServiceException;
 
 @Service
 public class TeamService {
-	
+
 	// @Autowired
 	private TeamRepository repository;
 
@@ -22,11 +21,11 @@ public class TeamService {
 
 	public Team save(Team team) throws ServiceException {
 		if (team.getUsers().size() <= 10) {
-			try {
+			if (team.getStatus() == "Active" || team.getStatus() == "Inactive") {
 				return repository.save(team);
 			}
-			catch (DataIntegrityViolationException e) {
-				throw new ServiceException("A User can only be in one Team at a time");
+			else {
+				throw new ServiceException("Status must be 'Active' or 'Inactive'");
 			}
 		}
 		else {

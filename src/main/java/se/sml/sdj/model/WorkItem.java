@@ -9,8 +9,6 @@ import javax.persistence.Id;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import se.sml.sdj.service.exception.ServiceException;
-
 @Entity
 public class WorkItem {
 	@Id
@@ -35,7 +33,7 @@ public class WorkItem {
 	protected WorkItem() {
 	}
 
-	public WorkItem(String lable, String description, String workItemNumber, String status) throws ServiceException {
+	public WorkItem(String lable, String description, String workItemNumber, String status) {
 		this.lable = lable;
 		this.description = description;
 		this.workItemNumber = workItemNumber;

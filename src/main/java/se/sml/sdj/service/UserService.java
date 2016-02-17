@@ -71,10 +71,10 @@ public class UserService {
 		}
 	}
 
-	// Lekstuga
+	// Lekstuga  ////////////////////////////////////////////////////////////////////////////////////////////
+	
 	public void addWorkItem(String username, WorkItem workItem) throws ServiceException {
 		User user = userRepository.findByUsername(username);
-		System.out.println(user.getStatus());
 		if (user.getStatus() == "Active") {
 			user.addWorkItem(workItem);
 			userRepository.save(user);
@@ -98,10 +98,10 @@ public class UserService {
 	public User updateStatus(String username, String status) {
 		User user = userRepository.findByUsername(username);
 		user.setStatus(status);
-		return userRepository.save(user);
-		
+		return save(user);
 	}
-	// Lekstuga slutar här
+
+	// Lekstuga slutar här  /////////////////////////////////////////////////////////////////////////////////
 
 	public Collection<User> findByFirstName(String firstName) {
 		return userRepository.findByFirstName(firstName);

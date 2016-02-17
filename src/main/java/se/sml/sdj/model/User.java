@@ -14,8 +14,6 @@ import javax.persistence.Table;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import se.sml.sdj.service.exception.ServiceException;
-
 @Entity
 @Table(name = "Users")
 public class User {
@@ -48,7 +46,7 @@ public class User {
 	protected User() {
 	}
 
-	public User(String username, String firstName, String lastName, String userNumber, String status) throws ServiceException {
+	public User(String username, String firstName, String lastName, String userNumber, String status) {
 		this.username = username;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -101,8 +99,9 @@ public class User {
 		this.userNumber = userNumber;
 	}
 
-	public void addWorkItem(WorkItem workItem) {
+	public User addWorkItem(WorkItem workItem) {
 		workItems.add(workItem);
+		return this;
 	}
 
 	public void setStatus(String status) {

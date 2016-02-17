@@ -21,6 +21,9 @@ public class Team {
 
 	@Column(unique = true, nullable = false)
 	private String name;
+	
+	@Column(nullable = false)
+	private String status;
 
 	@OneToMany(fetch = FetchType.EAGER)
 	private Collection<User> users;
@@ -28,8 +31,9 @@ public class Team {
 	protected Team() {
 	}
 
-	public Team(String name) {
+	public Team(String name, String status) {
 		this.name = name;
+		this.status = status;
 		this.users = new ArrayList<>();
 	}
 
@@ -40,6 +44,10 @@ public class Team {
 	public String getName() {
 		return name;
 	}
+	
+	public String getStatus() {
+		return status;
+	}
 
 	public Collection<User> getUsers() {
 		return users;
@@ -47,6 +55,10 @@ public class Team {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public void addUser(User user) {

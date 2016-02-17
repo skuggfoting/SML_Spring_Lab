@@ -6,6 +6,7 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import se.sml.sdj.model.Issue;
 import se.sml.sdj.model.WorkItem;
 import se.sml.sdj.service.exception.ServiceException;
 
@@ -35,6 +36,29 @@ public class WorkItemService {
 		}
 	}
 	
+	public WorkItem updateStatus(String workItemNumber, String status) throws ServiceException {
+		WorkItem workItem = workItemRepository.findByWorkItemNumber(workItemNumber);
+		workItem.setStatus(status);
+		return save(workItem);
+	}
+	
+	public WorkItem addIssue(WorkItem workItem, Issue issue) throws ServiceException {
+		if (workItem.getStatus() == "Done") {
+			workItem.addIssue(issue);
+			workItem.setStatus("Unstarted");
+			return save(workItem);
+		}
+		else
+		{
+			throw new ServiceException("Can only add an issue when the work item is done ");
+		}
+		
+	}
+	
+	public WorkItem updateIssue(WorkItem workItem, Issue issue) throws ServiceException {
+			return save(workItem);
+	}
+	
 	public Collection<WorkItem> findByStatus(String lable){
 		return workItemRepository.findByStatus(lable);
 	}
@@ -47,6 +71,10 @@ public class WorkItemService {
 		Collection<WorkItem> workItems = new ArrayList<>();
 		teamRepository.findUsersByTeam(name).forEach(u -> workItems.addAll(u.getWorkItem()));
 		return workItems;
+	}
+	
+	public Collection<WorkItem> findAllByIssue(){
+		return workItemRepository.getByIssue();
 	}
 }
 
