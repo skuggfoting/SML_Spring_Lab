@@ -15,9 +15,9 @@ interface UserRepository extends PagingAndSortingRepository<User, Long> {
 	List<User> findByLastName(String lastName);
 
 	User findByUsername(String username);
-	
+
 	List<User> findByFirstNameAndLastName(String firstName, String lastName);
-	
+
 	List<User> findByFirstNameAndLastNameAndUsername(String firstName, String lastName, String username);
 
 	User findByUserNumber(String userNumber);
@@ -25,26 +25,3 @@ interface UserRepository extends PagingAndSortingRepository<User, Long> {
 	@Query("select u.workItems from User u where u.username = ?1")
 	List<WorkItem> findWorkItemsByUser(String name);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

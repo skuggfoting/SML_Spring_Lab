@@ -21,7 +21,7 @@ public class Team {
 
 	@Column(unique = true, nullable = false)
 	private String name;
-	
+
 	@Column(nullable = false)
 	private String status;
 
@@ -44,7 +44,7 @@ public class Team {
 	public String getName() {
 		return name;
 	}
-	
+
 	public String getStatus() {
 		return status;
 	}
@@ -56,13 +56,13 @@ public class Team {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public void setStatus(String status) {
 		this.status = status;
 	}
 
 	public void addUser(User user) {
-//		user.setTeam    - BiDirectional
+		// user.setTeam - BiDirectional
 		users.add(user);
 	}
 

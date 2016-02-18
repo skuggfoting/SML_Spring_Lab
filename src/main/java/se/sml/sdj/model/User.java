@@ -36,10 +36,6 @@ public class User {
 	@Column(nullable = false)
 	private String status;
 
-	// @ManyToOne // (cascade = CascadeType.PERSIST)
-	//// @JoinColumn(name="id")
-	// private Team team;
-
 	@OneToMany(fetch = FetchType.EAGER)
 	private Collection<WorkItem> workItems;
 

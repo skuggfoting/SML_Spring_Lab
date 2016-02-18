@@ -6,12 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import se.sml.sdj.model.Team;
+import se.sml.sdj.model.User;
 import se.sml.sdj.service.exception.ServiceException;
 
 @Service
 public class TeamService {
 
-	// @Autowired
 	private TeamRepository repository;
 
 	@Autowired
@@ -19,10 +19,11 @@ public class TeamService {
 		this.repository = repository;
 	}
 
-	public Team save(Team team) throws ServiceException {
+	public TeamService save(Team team) throws ServiceException {
 		if (team.getUsers().size() <= 10) {
 			if (team.getStatus() == "Active" || team.getStatus() == "Inactive") {
-				return repository.save(team);
+				repository.save(team);
+				return this;
 			}
 			else {
 				throw new ServiceException("Status must be 'Active' or 'Inactive'");
@@ -31,6 +32,13 @@ public class TeamService {
 		else {
 			throw new ServiceException("There can be only 10 Users in each Team");
 		}
+	}
+	
+	public TeamService addUser(String name, User user) {
+		Team team =findByName(name);
+		team.addUser(user);
+		repository.save(team);
+		return this;
 	}
 
 	public Team findByName(String name) {

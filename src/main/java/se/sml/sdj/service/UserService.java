@@ -14,7 +14,6 @@ import se.sml.sdj.service.exception.ServiceException;
 @Service
 public class UserService {
 
-	// @Autowired - Den ena eller den andra räcker här
 	private UserRepository userRepository;
 	private TeamRepository teamRepository;
 	private WorkItemRepository workItemRepository;
@@ -27,81 +26,53 @@ public class UserService {
 	}
 
 	@Transactional
-	public User save(User user) throws ServiceException {
+	public UserService save(User user) throws ServiceException {
 		{
-			{
-				if (maximumWorkItems(user) && correctUsername(user) && user.getStatus() == "Active" || user.getStatus() == "Inactive") {
+			if (maximumWorkItems(user) && correctUsername(user) && user.getStatus() == "Active" || user.getStatus() == "Inactive") {
 
-					if (user.getStatus() == "Inactive") {
-						user.getWorkItem().forEach(w -> w.setStatus("Unstarted"));
-						workItemRepository.save(user.getWorkItem());
-						user.getWorkItem().clear();
-						// throw new ServiceException("User is 'Inactive' and
-						// all WorkItems associated with the User has been set
-						// to 'Unstarted' and dissociated with the User");
-					}
-					return userRepository.save(user);
+				if (user.getStatus() == "Inactive") {
+					user.getWorkItem().forEach(w -> w.setStatus("Unstarted"));
+					workItemRepository.save(user.getWorkItem());
+					user.getWorkItem().clear();
 				}
-				else {
-					throw new ServiceException("Status must be 'Active' or 'Inactive'");
-				}
+				userRepository.save(user);
+				return this;
+			}
+			else {
+				throw new ServiceException("Status must be 'Active' or 'Inactive'");
 			}
 		}
 	}
 
 	private boolean correctUsername(User user) throws ServiceException {
-		{
-			if (user.getUsername().length() >= 10) {
-				return true;
-			}
-			else {
-				throw new ServiceException("Username must be at least 10 char long");
-			}
+		if (user.getUsername().length() >= 10) {
+			return true;
+		}
+		else {
+			throw new ServiceException("Username must be at least 10 char long");
 		}
 	}
 
 	private boolean maximumWorkItems(User user) throws ServiceException {
-		{
-			if (user.getWorkItem().size() <= 5) {
-				return true;
-			}
-			else {
-				throw new ServiceException("Max 5 WorkItem per User");
-			}
+		if (user.getWorkItem().size() <= 5) {
+			return true;
+		}
+		else {
+			throw new ServiceException("Max 5 WorkItem per User");
 		}
 	}
 
-	// Lekstuga  ////////////////////////////////////////////////////////////////////////////////////////////
-	
-	public void addWorkItem(String username, WorkItem workItem) throws ServiceException {
-		User user = userRepository.findByUsername(username);
-		if (user.getStatus() == "Active") {
+	public UserService addWorkItem(String username, WorkItem workItem) throws ServiceException {
+		User user = findByUsername(username);
+		if (user.getStatus().matches("Active")) {
 			user.addWorkItem(workItem);
 			userRepository.save(user);
+			return this;
 		}
 		else {
 			throw new ServiceException("Can't add WorkItem to User with status 'Inactive'");
 		}
 	}
-
-	public void addWorkItems(String username, Collection<WorkItem> workItem) throws ServiceException {
-		User user = userRepository.findByUsername(username);
-		if (user.getStatus() == "Active") {
-			workItem.forEach(wi -> user.addWorkItem(wi));
-			userRepository.save(user);
-		}
-		else {
-			throw new ServiceException("Can't add WorkItems to User with status 'Inactive'");
-		}
-	}
-
-	public User updateStatus(String username, String status) {
-		User user = userRepository.findByUsername(username);
-		user.setStatus(status);
-		return save(user);
-	}
-
-	// Lekstuga slutar här  /////////////////////////////////////////////////////////////////////////////////
 
 	public Collection<User> findByFirstName(String firstName) {
 		return userRepository.findByFirstName(firstName);
