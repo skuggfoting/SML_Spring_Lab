@@ -21,7 +21,7 @@ public class TeamService {
 
 	public TeamService save(Team team) throws ServiceException {
 		if (team.getUsers().size() <= 10) {
-			if (team.getStatus() == "Active" || team.getStatus() == "Inactive") {
+			if (team.getStatus().equals("Active") || team.getStatus().equals("Inactive")) {
 				repository.save(team);
 				return this;
 			}
@@ -35,10 +35,14 @@ public class TeamService {
 	}
 	
 	public TeamService addUser(String name, User user) {
+		try {
 		Team team =findByName(name);
 		team.addUser(user);
-		repository.save(team);
-		return this;
+		return save(team);
+		}
+		catch(org.springframework.dao.DataIntegrityViolationException e) {
+			throw new ServiceException("A User can only be in one Team at a time");
+		}
 	}
 
 	public Team findByName(String name) {
@@ -53,3 +57,13 @@ public class TeamService {
 		return repository.countByName(name);
 	}
 }
+
+
+
+
+
+
+
+
+
+

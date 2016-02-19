@@ -62,7 +62,6 @@ public class Team {
 	}
 
 	public void addUser(User user) {
-		// user.setTeam - BiDirectional
 		users.add(user);
 	}
 

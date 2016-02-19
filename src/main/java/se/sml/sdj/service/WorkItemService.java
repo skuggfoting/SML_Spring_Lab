@@ -23,7 +23,7 @@ public class WorkItemService {
 	}
 
 	public WorkItemService save(WorkItem workItem) throws ServiceException {
-		if (workItem.getStatus() == "Unstarted" || workItem.getStatus() == "Started" || workItem.getStatus() == "Done" || workItem.getStatus() == "Inactive") {
+		if (workItem.getStatus().equals("Unstarted") || workItem.getStatus().equals("Started") || workItem.getStatus().equals("Done") || workItem.getStatus().equals("Inactive")) {
 			workItemRepository.save(workItem);
 			return this;
 		}
@@ -32,16 +32,8 @@ public class WorkItemService {
 		}
 	}
 
-	//// VARFÖR DENNA?!!!
-	public WorkItemService updateStatus(String workItemNumber, String status) throws ServiceException {
-		WorkItem workItem = workItemRepository.findByWorkItemNumber(workItemNumber);
-		workItem.setStatus(status);
-		return save(workItem);
-	}
-	///////////
-
 	public WorkItemService addIssue(WorkItem workItem, Issue issue) throws ServiceException {
-		if (workItem.getStatus() == "Done") {
+		if (workItem.getStatus().equals("Done")) {
 			workItem.addIssue(issue);
 			workItem.setStatus("Unstarted");
 			return save(workItem);
@@ -52,6 +44,7 @@ public class WorkItemService {
 	}
 
 	public WorkItemService updateIssue(WorkItem workItem, Issue issue) throws ServiceException {
+		workItem.addIssue(issue);
 		return save(workItem);
 	}
 

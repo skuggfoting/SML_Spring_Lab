@@ -28,9 +28,9 @@ public class UserService {
 	@Transactional
 	public UserService save(User user) throws ServiceException {
 		{
-			if (maximumWorkItems(user) && correctUsername(user) && user.getStatus() == "Active" || user.getStatus() == "Inactive") {
+			if (maximumWorkItems(user) && correctUsername(user) && user.getStatus().equals("Active") || user.getStatus().equals("Inactive")) {
 
-				if (user.getStatus() == "Inactive") {
+				if (user.getStatus().equals("Inactive")) {
 					user.getWorkItem().forEach(w -> w.setStatus("Unstarted"));
 					workItemRepository.save(user.getWorkItem());
 					user.getWorkItem().clear();
@@ -64,10 +64,9 @@ public class UserService {
 
 	public UserService addWorkItem(String username, WorkItem workItem) throws ServiceException {
 		User user = findByUsername(username);
-		if (user.getStatus().matches("Active")) {
+		if (user.getStatus().equals(("Active"))) {
 			user.addWorkItem(workItem);
-			userRepository.save(user);
-			return this;
+			return save(user);
 		}
 		else {
 			throw new ServiceException("Can't add WorkItem to User with status 'Inactive'");

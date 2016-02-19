@@ -30,9 +30,9 @@ public final class Main {
 			
 			// Save Users
 			userService.save(user1)
-			.save(user2)
-			.save(user3)
-			.save(user4);
+						.save(user2)
+						.save(user3)
+						.save(user4);
 
 			
 			// Initiate Teams
@@ -70,8 +70,9 @@ public final class Main {
 			System.out.println("\nAdd Issue to WorkItem:\n" + workItem1);
 			
 			// Update Issue
-			issue1.setIssue("Monarkin fallerar, hjääääääälp...");
-			workItemService.updateIssue(workItem1, issue1);
+			Issue issueUpdate = workItemService.findByWorkItemNumber("2001").getIssue();
+			issueUpdate.setIssue("Monarkin fallerar, hjääääääälp...");
+			workItemService.updateIssue(workItem1, issueUpdate);
 			System.out.println("\nUpdate Issue:\n" + workItem1);
 
 
@@ -89,7 +90,7 @@ public final class Main {
 						.addUser("Hovet", user3)
 						.addUser("PR", user4);
 			
-			//To make it fail:
+			//To make it fail(Adding same User to two Teams:
 //			teamService.addUser("PR", user1);
 			
 
