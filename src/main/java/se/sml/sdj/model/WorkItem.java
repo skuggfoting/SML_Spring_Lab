@@ -48,6 +48,14 @@ public class WorkItem {
 		return lable;
 	}
 	
+	public String getDescription() {
+		return description;
+	}
+	
+	public String getWorkItemNumber() {
+		return workItemNumber;
+	}
+	
 	public String getStatus() {
 		return status;
 	}
@@ -56,12 +64,24 @@ public class WorkItem {
 		return issue;
 	}
 	
-	public void setLable(String lable) {
+	public WorkItem setLable(String lable) {
 		this.lable = lable;
+		return this;
+	}
+	
+	public WorkItem setDescription(String description) {
+		this.description = description;
+		return this;
+	}
+	
+	public WorkItem setWorkItemNumber(String workItemNumber) {
+		this.workItemNumber = workItemNumber;
+		return this;
 	}
 
-	public void setStatus(String status) {
+	public WorkItem setStatus(String status) {
 		this.status = status;
+		return this;
 	}
 	
 	public void addIssue(Issue issue) {

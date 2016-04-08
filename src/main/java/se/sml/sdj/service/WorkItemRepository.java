@@ -8,11 +8,11 @@ import se.sml.sdj.model.WorkItem;
 
 interface WorkItemRepository extends CrudRepository<WorkItem, Long> {
 
-	List<WorkItem> findByStatus(String lable);
+	List<WorkItem> getByStatus(String lable);
 
-	List<WorkItem> findByDescriptionContaining(String value);
+	List<WorkItem> getByDescriptionContaining(String value);
 
-	WorkItem findByWorkItemNumber(String workItemNumber);
+	WorkItem getByWorkItemNumber(String workItemNumber);
 
 	List<WorkItem> getByIssueNotNull();
 	

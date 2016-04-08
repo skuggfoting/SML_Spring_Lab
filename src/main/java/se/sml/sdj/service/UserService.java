@@ -63,7 +63,7 @@ public class UserService {
 	}
 
 	public UserService addWorkItem(String username, WorkItem workItem) throws ServiceException {
-		User user = findByUsername(username);
+		User user = getByUsername(username);
 		if (user.getStatus().equals(("Active"))) {
 			user.addWorkItem(workItem);
 			return save(user);
@@ -73,35 +73,35 @@ public class UserService {
 		}
 	}
 
-	public Collection<User> findByFirstName(String firstName) {
+	public Collection<User> getByFirstName(String firstName) {
 		return userRepository.findByFirstName(firstName);
 	}
 
-	public Collection<User> findByLastName(String lastName) {
+	public Collection<User> getByLastName(String lastName) {
 		return userRepository.findByLastName(lastName);
 	}
 
-	public User findByUsername(String username) {
+	public User getByUsername(String username) {
 		return userRepository.findByUsername(username);
 	}
 
-	public Collection<User> findByFirstNameAndLastName(String firstName, String lastName) {
+	public Collection<User> getByFirstNameAndLastName(String firstName, String lastName) {
 		return userRepository.findByFirstNameAndLastName(firstName, lastName);
 	}
 
-	public Collection<User> findByFirstNameAndLastNameAndUsername(String firstName, String lastName, String username) {
+	public Collection<User> getByFirstNameAndLastNameAndUsername(String firstName, String lastName, String username) {
 		return userRepository.findByFirstNameAndLastNameAndUsername(firstName, lastName, username);
 	}
 
-	public User findByUserNumber(String userNumber) {
+	public User getByUserNumber(String userNumber) {
 		return userRepository.findByUserNumber(userNumber);
 	}
 
-	public Collection<WorkItem> findWorkItemsByUser(String name) {
-		return userRepository.findWorkItemsByUser(name);
+	public Collection<WorkItem> getWorkItemsByUser(String username) {
+		return userRepository.findWorkItemsByUser(username);
 	}
 
-	public List<User> findUsersByTeam(String name) {
-		return teamRepository.findUsersByTeam(name);
+	public List<User> getUsersByTeam(String team) {
+		return teamRepository.findUsersByTeam(team);
 	}
 }

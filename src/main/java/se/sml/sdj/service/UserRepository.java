@@ -23,5 +23,6 @@ interface UserRepository extends PagingAndSortingRepository<User, Long> {
 	User findByUserNumber(String userNumber);
 
 	@Query("select u.workItems from User u where u.username = ?1")
-	List<WorkItem> findWorkItemsByUser(String name);
+	List<WorkItem> findWorkItemsByUser(String username);
 }
+

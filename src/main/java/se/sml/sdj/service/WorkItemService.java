@@ -32,7 +32,10 @@ public class WorkItemService {
 		}
 	}
 
-	public WorkItemService addIssue(WorkItem workItem, Issue issue) throws ServiceException {
+	public WorkItemService addIssue(String workItemNumber, Issue issue) throws ServiceException {
+		
+		WorkItem workItem = workItemRepository.getByWorkItemNumber(workItemNumber);
+		
 		if (workItem.getStatus().equals("Done")) {
 			workItem.addIssue(issue);
 			workItem.setStatus("Unstarted");
@@ -48,23 +51,23 @@ public class WorkItemService {
 		return save(workItem);
 	}
 
-	public Collection<WorkItem> findByStatus(String lable) {
-		return workItemRepository.findByStatus(lable);
+	public Collection<WorkItem> getByStatus(String lable) {
+		return workItemRepository.getByStatus(lable);
 	}
 
-	public Collection<WorkItem> findByDescriptionContaining(String value) {
-		return workItemRepository.findByDescriptionContaining(value);
+	public Collection<WorkItem> getByDescriptionContaining(String text) {
+		return workItemRepository.getByDescriptionContaining(text);
 	}
 	
-	public WorkItem findByWorkItemNumber(String workItemNumber) {
-		return workItemRepository.findByWorkItemNumber(workItemNumber);
+	public WorkItem getByWorkItemNumber(String workItemNumber) {
+		return workItemRepository.getByWorkItemNumber(workItemNumber);
 	}
 	
-	public Collection<WorkItem> findAllByIssue() {
+	public Collection<WorkItem> getAllByIssue() {
 		return workItemRepository.getByIssueNotNull();
 	}
 
-	public Collection<WorkItem> findWorkItemsByTeam(String name) {
+	public Collection<WorkItem> getByTeam(String name) {
 		Collection<WorkItem> workItems = new ArrayList<>();
 		teamRepository.findUsersByTeam(name).forEach(u -> workItems.addAll(u.getWorkItem()));
 		return workItems;

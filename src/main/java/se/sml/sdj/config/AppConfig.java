@@ -21,7 +21,7 @@ import com.zaxxer.hikari.HikariDataSource;
 @EnableTransactionManagement
 public class AppConfig {
 
-	@Bean
+	@Bean(destroyMethod = "close")
 	public DataSource dataSource() {
 
 		HikariConfig config = new HikariConfig();

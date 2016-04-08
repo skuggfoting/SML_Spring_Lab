@@ -79,20 +79,29 @@ public class User {
 		return status;
 	}
 
-	public void setUsername(String username) {
+	public User setUsername(String username) {
 		this.username = username;
+		return this;
 	}
 
-	public void setFirstName(String firstName) {
+	public User setFirstName(String firstName) {
 		this.firstName = firstName;
+		return this;
 	}
 
-	public void setLastName(String lastName) {
+	public User setLastName(String lastName) {
 		this.lastName = lastName;
+		return this;
 	}
 
-	public void setUserNumber(String userNumber) {
+	public User setUserNumber(String userNumber) {
 		this.userNumber = userNumber;
+		return this;
+	}
+
+	public User setStatus(String status) {
+		this.status = status;
+		return this;
 	}
 
 	public User addWorkItem(WorkItem workItem) {
@@ -100,9 +109,6 @@ public class User {
 		return this;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
 
 	@Override
 	public String toString() {
