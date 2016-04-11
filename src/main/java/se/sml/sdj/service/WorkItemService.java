@@ -42,15 +42,22 @@ public class WorkItemService {
 			return save(workItem);
 		}
 		else {
-			throw new ServiceException("Can only add an issue when the work item is done ");
+			throw new ServiceException("Can only add an issue when the work item is done");
 		}
 	}
 
-	public WorkItemService updateIssue(WorkItem workItem, Issue issue) throws ServiceException {
+	public WorkItemService updateIssue(String workItemNumber, Issue issue) throws ServiceException {
+		
+		WorkItem workItem = workItemRepository.getByWorkItemNumber(workItemNumber);
+	
+		if (workItem == null) {
+			throw new ServiceException("No workItem found");
+		}
+		
 		workItem.addIssue(issue);
+		
 		return save(workItem);
 	}
-
 	public Collection<WorkItem> getByStatus(String lable) {
 		return workItemRepository.getByStatus(lable);
 	}
@@ -60,7 +67,13 @@ public class WorkItemService {
 	}
 	
 	public WorkItem getByWorkItemNumber(String workItemNumber) {
-		return workItemRepository.getByWorkItemNumber(workItemNumber);
+		WorkItem workItem = workItemRepository.getByWorkItemNumber(workItemNumber);
+		
+		if (workItem == null) {
+			throw new ServiceException("No workItem found");
+		}
+		else
+		return workItem;
 	}
 	
 	public Collection<WorkItem> getAllByIssue() {

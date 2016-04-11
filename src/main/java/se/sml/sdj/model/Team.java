@@ -53,12 +53,14 @@ public class Team {
 		return users;
 	}
 
-	public void setName(String name) {
+	public Team setName(String name) {
 		this.name = name;
+		return this;
 	}
 
-	public void setStatus(String status) {
+	public Team setStatus(String status) {
 		this.status = status;
+		return this;
 	}
 
 	public void addUser(User user) {

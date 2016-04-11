@@ -72,7 +72,7 @@ public final class Main {
 			// Update Issue
 			Issue issueUpdate = workItemService.getByWorkItemNumber("2001").getIssue();
 			issueUpdate.setIssue("Monarkin fallerar, hjääääääälp...");
-			workItemService.updateIssue(workItem1, issueUpdate);
+			workItemService.updateIssue("2001", issueUpdate);
 			System.out.println("\nUpdate Issue:\n" + workItem1);
 
 
