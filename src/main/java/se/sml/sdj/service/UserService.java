@@ -62,8 +62,8 @@ public class UserService {
 		}
 	}
 
-	public UserService addWorkItem(String username, WorkItem workItem) throws ServiceException {
-		User user = getByUsername(username);
+	public UserService addWorkItem(User user, WorkItem workItem) throws ServiceException {
+		
 		if (user.getStatus().equals(("Active"))) {
 			user.addWorkItem(workItem);
 			return save(user);
@@ -74,34 +74,34 @@ public class UserService {
 	}
 
 	public Collection<User> getByFirstName(String firstName) {
-		return userRepository.findByFirstName(firstName);
+		return userRepository.getByFirstName(firstName);
 	}
 
 	public Collection<User> getByLastName(String lastName) {
-		return userRepository.findByLastName(lastName);
+		return userRepository.getByLastName(lastName);
 	}
 
 	public User getByUsername(String username) {
-		return userRepository.findByUsername(username);
+		return userRepository.getByUsername(username);
 	}
 
 	public Collection<User> getByFirstNameAndLastName(String firstName, String lastName) {
-		return userRepository.findByFirstNameAndLastName(firstName, lastName);
+		return userRepository.getByFirstNameAndLastName(firstName, lastName);
 	}
 
 	public Collection<User> getByFirstNameAndLastNameAndUsername(String firstName, String lastName, String username) {
-		return userRepository.findByFirstNameAndLastNameAndUsername(firstName, lastName, username);
+		return userRepository.getByFirstNameAndLastNameAndUsername(firstName, lastName, username);
 	}
 
 	public User getByUserNumber(String userNumber) {
-		return userRepository.findByUserNumber(userNumber);
+		return userRepository.getByUserNumber(userNumber);
 	}
 
 	public Collection<WorkItem> getWorkItemsByUser(String username) {
-		return userRepository.findWorkItemsByUser(username);
+		return userRepository.getWorkItemsByUser(username);
 	}
 
 	public List<User> getUsersByTeam(String team) {
-		return teamRepository.findUsersByTeam(team);
+		return teamRepository.getUsersByTeam(team);
 	}
 }

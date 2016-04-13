@@ -77,12 +77,12 @@ public final class Main {
 
 
 			// Add WorkItems to Users
-			userService.addWorkItem("CG16-12345", workItem1)
-						.addWorkItem("CG16-12345", workItem2)
-						.addWorkItem("CG16-12345", workItem3)
-						.addWorkItem("CG16-12345", workItem4)
-						.addWorkItem("CG16-12345", workItem5)
-						.addWorkItem("SiBe-12345", workItem6);
+			userService.addWorkItem(user1, workItem1)
+						.addWorkItem(user1, workItem2)
+						.addWorkItem(user1, workItem3)
+						.addWorkItem(user1, workItem4)
+						.addWorkItem(user1, workItem5)
+						.addWorkItem(user1, workItem6);
 			
 			// Adding Users to Team. A User can be in only one Team
 			teamService.addUser("Hovet", user1)

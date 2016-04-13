@@ -46,7 +46,7 @@ public class TeamService {
 	}
 
 	public Team findByName(String name) {
-		return repository.findByName(name);
+		return repository.getByName(name);
 	}
 
 	public List<Team> findAll() {

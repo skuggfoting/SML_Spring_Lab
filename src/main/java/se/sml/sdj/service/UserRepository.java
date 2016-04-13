@@ -10,19 +10,18 @@ import se.sml.sdj.model.WorkItem;
 
 interface UserRepository extends PagingAndSortingRepository<User, Long> {
 
-	List<User> findByFirstName(String firstName);
+	List<User> getByFirstName(String firstName);
 
-	List<User> findByLastName(String lastName);
+	List<User> getByLastName(String lastName);
 
-	User findByUsername(String username);
+	User getByUsername(String username);
 
-	List<User> findByFirstNameAndLastName(String firstName, String lastName);
+	List<User> getByFirstNameAndLastName(String firstName, String lastName);
 
-	List<User> findByFirstNameAndLastNameAndUsername(String firstName, String lastName, String username);
+	List<User> getByFirstNameAndLastNameAndUsername(String firstName, String lastName, String username);
 
-	User findByUserNumber(String userNumber);
+	User getByUserNumber(String userNumber);
 
 	@Query("select u.workItems from User u where u.username = ?1")
-	List<WorkItem> findWorkItemsByUser(String username);
+	List<WorkItem> getWorkItemsByUser(String username);
 }
-

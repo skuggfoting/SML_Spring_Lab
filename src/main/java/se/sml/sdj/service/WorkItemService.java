@@ -82,7 +82,7 @@ public class WorkItemService {
 
 	public Collection<WorkItem> getByTeam(String name) {
 		Collection<WorkItem> workItems = new ArrayList<>();
-		teamRepository.findUsersByTeam(name).forEach(u -> workItems.addAll(u.getWorkItem()));
+		teamRepository.getUsersByTeam(name).forEach(u -> workItems.addAll(u.getWorkItem()));
 		return workItems;
 	}
 }

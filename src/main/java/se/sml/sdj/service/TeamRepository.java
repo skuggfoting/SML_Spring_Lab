@@ -10,12 +10,12 @@ import se.sml.sdj.model.User;
 
 interface TeamRepository extends CrudRepository<Team, Long> {
 
-	Team findByName(String name);
+	Team getByName(String name);
 
 	List<Team> findAll();
 
 	Long countByName(String name);
 
 	@Query("select t.users from Team t where t.name = ?1")
-	List<User> findUsersByTeam(String name);
+	List<User> getUsersByTeam(String name);
 }
